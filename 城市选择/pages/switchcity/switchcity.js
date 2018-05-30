@@ -1,6 +1,7 @@
 const city = require('../../utils/city.js');
 const cityObjs = require('../../utils/city.js');
 const config = require('../../utils/config.js');
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
 const appInstance = getApp();
 Page({
   data: {
@@ -22,6 +23,7 @@ Page({
     condition: false,
   },
   onLoad: function () {
+   
     // 生命周期函数--监听页面加载
     const searchLetter = city.searchLetter;
     const cityList = city.cityList();
@@ -55,11 +57,85 @@ Page({
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
-
+ 
   },
   onShow: function () {
     // 生命周期函数--监听页面显示
+    // 实例化API核心类
+    var demo = new QQMapWX({
+      key: '5KOBZ-P3R3G-Z64QG-IPKWW-LHKBH-AQFES' // 必填
+    });
 
+    // 调用接口
+    demo.getCityList({
+      success: function (res) {
+        console.log(res);
+        if(res.status == 0){
+          var res = res.result;
+          var newPinyin = [];
+          var allCity = [];
+          for (let i = 0; i < res.length; i++) {
+            for (let j = 0; j < res[i].length; j++) {
+              if (res[i][j].pinyin){
+                newPinyin.push(res[i][j].pinyin[0])
+                allCity.push({ id: res[i][j].id, name: res[i][j].name, pinyin: ((res[i][j].pinyin[0]).slice(0, 1)).toLocaleUpperCase()})
+              }
+              // console.log('---', res[i][j].pinyin[0])
+            }
+          }
+        }
+        var newPinyin= newPinyin.map(function (currentValue, index){
+          return (currentValue.toLocaleUpperCase()).slice(0, 1)
+        });
+        newPinyin.sort();
+        console.log('dddd', newPinyin, new Set(newPinyin));
+        newPinyin= [...new Set(newPinyin)] //去重
+        var arr = [];
+        var brr =  [];
+        console.log('city', newPinyin, allCity)
+          for (var j = 0; j < allCity.length;j++){
+            var index = arr.indexOf(allCity[j].pinyin)
+            if(index == -1){
+              arr.push(allCity[j].pinyin)
+              brr.push({ code: allCity[j].pinyin, data: [{ id: allCity[j].id, name: allCity[j].name }] })
+            }else{
+              console.log('d', brr[index])
+              brr[index].data.push({ id: allCity[j].id, name: allCity[j].name })
+            }
+            
+          }
+          // var arr = [{ E: 'Edison' }, { B: '白百合' }, { A: 'Angelbaby' }, { C: '陈冠希' }, { D: 'Duncan' }];
+          for (var i = 0; i < brr.length; i++) {
+            var m = arr.map(function (item, index, brr) {
+
+              var mark = true;
+              if (arr[index + 1]) {
+                var curkey = Object.keys(brr[index]);
+                var nextkey = Object.keys(brr[index + 1]);
+              }
+              if (curkey && nextkey) {
+                if (curkey[0].charCodeAt(0) > nextkey[0].charCodeAt(0)) {
+                  arr[index] = [arr[index + 1], arr[index + 1] = arr[index]][0];
+                  mark = false;
+                }
+              }
+              return mark;
+            })
+            if (m[i]) {
+
+              break;
+            }
+          }
+          console.log(arr);
+          console.log("", arr,brr)
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+      complete: function (res) {
+        console.log(res);
+      }
+    });
   },
   onHide: function () {
     // 生命周期函数--监听页面隐藏
