@@ -1,5 +1,5 @@
 import MD5 from '../vendors/md5.js'
-const NIM = require('../vendors/NIM_Web_NIM_v4.9.1-beta.js')
+const NIM = require('../vendors/NIM_Web_NIM_v5.1.0.js')
 
 import { deepClone, judgeCustomMessageType } from './util.js'
 
