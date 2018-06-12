@@ -1,0 +1,22 @@
+{
+  "pages":[
+    "pages/login/login",
+    "pages/recentchat/recentchat",
+    "partials/addfriend/addfriend",
+    "partials/strangercard/strangercard",
+    "partials/messagenotification/messagenotification",
+    "partials/historyfromcloud/historyfromcloud",
+    "partials/blacklist/blacklist",
+    "partials/chating/chating",
+    "partials/forwardcontact/forwardcontact",
+    "components/emoji/emoji",
+    "components/inputclear/inputclear"
+
+  ],
+  "window":{
+    "backgroundColor": "#f0f0f0",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle":"black"
+  }
+}
