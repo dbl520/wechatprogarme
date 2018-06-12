@@ -28,7 +28,7 @@ Page({
       title: '加载中',
       mask: true
     })
-
+    console.log(app.globalData.friends, this.data.chatList,"好友列表")
     let self = this
     // 防止排序失败，再次排序
     for(let i=0; i<5; i++) {
@@ -86,6 +86,7 @@ Page({
     })
     // 监听添加好友信号（自己操作）
     app.globalData.subscriber.on('ADD_NEW_FRIEND', function (data) {
+      console.log(data)
       let msg = { type: 'addFriend', from: data.account || data.from, time: new Date().getTime() }
       self.addNotificationToChatList(msg)
       app.globalData.notificationList.push(msg)

@@ -17,8 +17,8 @@ Page({
     new IMEventHandler({
       // token: MD5(user.password),
       // account: user.account
-      token:'b23175465488f0b374b8c992231d5909',
-      account: 'qazwsxedc6'
+      // token:'b23175465488f0b374b8c992231d5909',
+      // account: 'qazwsxedc6'
     })
 
 

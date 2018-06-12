@@ -5,14 +5,8 @@ var subscriber = require('./utils/event.js')
 
 App({
 
-  /**
-   * 前台进入后台
-   */
-  onHide() {
-  },
-  onError(err) {
-    // console.log('小程序出错了', err)
-  },
+
+
   globalData:{
     isLogin: false, // 当前是否是登录状态
     currentChatTo: '', // 记录当前聊天对象account，用于标记聊天时禁止更新最近会话unread
